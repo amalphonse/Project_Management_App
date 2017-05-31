@@ -1,4 +1,11 @@
 class TasksController < ApplicationController
+	before_action :set_task, only:[:edit, :update, :destroy, :show]
+	
+	def index
+		@tasks = Task.all
+
+	end
+	
 
 	def new
 		@task = Task.new
@@ -17,11 +24,11 @@ class TasksController < ApplicationController
 	end
 
 	def edit
-		@task = Task.find(params[:id])
+		
 	end
 
 	def update
-		@task = Task.find(params[:id])
+		
 		if @task.update(tasks_params)
 			flash[:notice] = "Task updated successfully."
 			redirect_to task_path(@task)
@@ -34,10 +41,21 @@ class TasksController < ApplicationController
 
 
 	def show
-		@task = Task.find(params[:id])
+		
+	end
+
+	def destroy
+		
+		@task.destroy
+		flash[:notice] = "Task was successfully deleted."
+		redirect_to tasks_path
 	end
 
 	private
+
+	def set_task
+		@task = Task.find(params[:id])
+	end
 	#whitelisting
 	def tasks_params
 		params.require(:task).permit(:content)
