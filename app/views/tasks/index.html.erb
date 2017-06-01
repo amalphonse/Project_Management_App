@@ -1,19 +1,20 @@
-<h1> Tasks List </h1>
+
 <p>
 	<%= link_to 'New Task', new_task_path %>
 </p>
-<table>
-	<lr>
-		<th>Content</th>
-	</lr>
 
-	<% @tasks.each do |task| %>
-		<tr>
-			<td><%= task.content %></td>
-			<td><%= link_to 'Show', task_path(task) %></td>
-			<td><%= link_to 'Edit', edit_task_path(task) %></td>
-			<td><%= link_to 'Delete', task_path(task), method: :delete, data: {confirm: "Are you sure you want to delete the task?"} %></td>
+<div class='row'>
+	<div class='col-md-4'>
+			<h1 class='text-center'>TO DO</h1>
+			<%= render @to_do %>
+	</div>
+	<div class='col-md-4'>
+		<h1 class='text-center'>DOING</h1>
+		<%= render @doing %>
+	</div>
 
-		</tr>
-		<% end %>
-</table>
+	<div class='col-md-4'>
+		<h1 class='text-center'>DONE</h1>
+		<%= render @done %>
+	</div>
+</div>

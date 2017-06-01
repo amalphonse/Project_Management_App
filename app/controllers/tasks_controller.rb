@@ -1,10 +1,12 @@
 class TasksController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_task, only:[:edit, :update, :destroy, :show]
+	before_action :set_task, only:[:edit, :update, :destroy, :show, :change]
 	
 	def index
 		#@tasks = Task.all
-		@tasks = current_user.tasks
+		@to_do = current_user.tasks.where(state: 'to_do')
+		@doing = current_user.tasks.where(state: 'doing')
+		@done = current_user.tasks.where(state: 'done')
 
 	end
 	
@@ -54,6 +56,13 @@ class TasksController < ApplicationController
 		redirect_to tasks_path
 	end
 
+
+	def change
+		@task.update_attributes(state: params[:state])
+		flash[:notice] = "Status changed successfully."
+		redirect_to tasks_path
+	end
+
 	private
 
 	def set_task
@@ -61,7 +70,7 @@ class TasksController < ApplicationController
 	end
 	#whitelisting
 	def tasks_params
-		params.require(:task).permit(:content)
+		params.require(:task).permit(:content, :state)
 
 	end
 
