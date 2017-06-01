@@ -24,7 +24,7 @@
 
 					<strong><%= link_to 'X', task_path(task), method: :delete, data: {confirm: 'Are you sure?'}, class: 'pull-right' %></strong>
 				</div>
-					<div class='panel-body'><%= task.content %></div>
+					<div class='panel-body'><%= raw(task.content_html) %></div>
 						<div class='panel-footer'>
 							<div class="btn-group btn-group-justified">
 							<% if task.state == 'doing' %>
